@@ -575,4 +575,173 @@ class Appointment {
 
     // Getters
     public int getId() { return id; }
-    public i
+    public int getPatientId() { return patientId; }
+    public int getDoctorId() { return doctorId; }
+    public String getDateTime() { return dateTime; }
+    public String getReason() { return reason; }
+    public String getStatus() { return status; }
+
+    @Override
+    public String toString() {
+        return "Appointment ID: " + id + ", Patient ID: " + patientId + ", Doctor ID: " + doctorId + 
+               ", Date/Time: " + dateTime + ", Reason: " + reason + ", Status: " + status;
+    }
+}
+
+// MedicalRecord class
+class MedicalRecord {
+    private int id;
+    private int patientId;
+    private int doctorId;
+    private String date;
+    private String diagnosis;
+    private String treatment;
+    private String prescription;
+    private String notes;
+
+    public MedicalRecord(int id, int patientId, int doctorId, String date, String diagnosis, 
+                         String treatment, String prescription, String notes) {
+        this.id = id;
+        this.patientId = patientId;
+        this.doctorId = doctorId;
+        this.date = date;
+        this.diagnosis = diagnosis;
+        this.treatment = treatment;
+        this.prescription = prescription;
+        this.notes = notes;
+    }
+
+    // Getters
+    public int getId() { return id; }
+    public int getPatientId() { return patientId; }
+    public int getDoctorId() { return doctorId; }
+    public String getDate() { return date; }
+    public String getDiagnosis() { return diagnosis; }
+    public String getTreatment() { return treatment; }
+    public String getPrescription() { return prescription; }
+    public String getNotes() { return notes; }
+
+    @Override
+    public String toString() {
+        return "Record ID: " + id + ", Patient ID: " + patientId + ", Doctor ID: " + doctorId + 
+               ", Date: " + date + "\nDiagnosis: " + diagnosis + "\nTreatment: " + treatment + 
+               "\nPrescription: " + prescription + "\nNotes: " + notes;
+    }
+}
+
+// MedicalSupply class
+class MedicalSupply {
+    private int id;
+    private String name;
+    private int quantity;
+    private double unitPrice;
+    private String expiryDate;
+
+    public MedicalSupply(int id, String name, int quantity, double unitPrice, String expiryDate) {
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.expiryDate = expiryDate;
+    }
+
+    // Getters and setters
+    public int getId() { return id; }
+    public String getName() { return name; }
+    public int getQuantity() { return quantity; }
+    public double getUnitPrice() { return unitPrice; }
+    public String getExpiryDate() { return expiryDate; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
+
+    @Override
+    public String toString() {
+        return "Item ID: " + id + ", Name: " + name + ", Quantity: " + quantity + 
+               ", Unit Price: $" + String.format("%.2f", unitPrice) + ", Expiry: " + expiryDate;
+    }
+}
+
+// Inventory class
+class Inventory {
+    private List<MedicalSupply> items;
+
+    public Inventory() {
+        this.items = new ArrayList<>();
+    }
+
+    public void addItem(MedicalSupply item) {
+        items.add(item);
+    }
+
+    public MedicalSupply findItemById(int id) {
+        for (MedicalSupply item : items) {
+            if (item.getId() == id) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    public List<MedicalSupply> getItems() {
+        return items;
+    }
+}
+
+// Bill class
+class Bill {
+    private int id;
+    private int patientId;
+    private String description;
+    private double amount;
+    private String date;
+    private String status; // Pending, Paid, Cancelled
+
+    public Bill(int id, int patientId, String description, double amount, String date, String status) {
+        this.id = id;
+        this.patientId = patientId;
+        this.description = description;
+        this.amount = amount;
+        this.date = date;
+        this.status = status;
+    }
+
+    // Getters
+    public int getId() { return id; }
+    public int getPatientId() { return patientId; }
+    public String getDescription() { return description; }
+    public double getAmount() { return amount; }
+    public String getDate() { return date; }
+    public String getStatus() { return status; }
+
+    @Override
+    public String toString() {
+        return "Bill ID: " + id + ", Patient ID: " + patientId + ", Description: " + description + 
+               ", Amount: $" + String.format("%.2f", amount) + ", Date: " + date + ", Status: " + status;
+    }
+}
+
+// BillingSystem class
+class BillingSystem {
+    private List<Bill> bills;
+
+    public BillingSystem() {
+        this.bills = new ArrayList<>();
+    }
+
+    public void addBill(Bill bill) {
+        bills.add(bill);
+    }
+
+    public List<Bill> getBills() {
+        return bills;
+    }
+
+    public List<Bill> getBillsForPatient(int patientId) {
+        List<Bill> result = new ArrayList<>();
+        for (Bill bill : bills) {
+            if (bill.getPatientId() == patientId) {
+                result.add(bill);
+            }
+        }
+        return result;
+    }
+}
